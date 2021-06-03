@@ -9,8 +9,7 @@ impl Rectangle {
         self.width * self.height
     }
 
-    fn can_hold(&self, other: &Rectangle) -> bool
-    {
+    fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
     }
 
@@ -72,8 +71,8 @@ fn area(width: u32, height: u32) -> u32 {
     width * height
 }
 
-fn area_tuple (dimesions: (u32, u32)) -> u32 {
-    dimesions.0 * dimesions.1
+fn area_tuple (dimensions: (u32, u32)) -> u32 {
+    dimensions.0 * dimensions.1
 }
 
 fn area_struct(rectangle: &Rectangle) -> u32 {
