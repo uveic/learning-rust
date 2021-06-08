@@ -1,5 +1,11 @@
+use std::collections::HashMap;
+
 fn main() {
+
+    ////////////////////////////////
+    ////////////////////////////////
     // Vector
+
     let _v: Vec<i32> = Vec::new();
     let ve = vec![1, 2, 3, 4, 5];
     let mut vec: Vec<i32> = Vec::new();
@@ -104,6 +110,55 @@ fn main() {
         println!("{}", c);
     }
 
+    ////////////////////////////////
+    ////////////////////////////////
     // HashMap
 
+    let mut scores = HashMap::new();
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+    scores.insert(String::from("Hello"), 36);
+
+    let teams = vec![String::from("Blue"), String::from("Yellow")];
+    let initial_scores = vec![10, 50];
+
+    let mut scores1: HashMap<_, _> =
+        teams.into_iter().zip(initial_scores.into_iter()).collect();
+
+    let field_name = String::from("Favourite colour");
+    let field_value = String::from("Blue");
+
+    let mut map = HashMap::new();
+    map.insert(field_value, field_name);
+    // field_nane and field_value are invalid at this point
+
+    let team_name = String::from("Blue");
+    println!("Score for Blue team: {:?}", scores.get(&team_name));
+
+    for (key, value) in scores {
+        println!("{}: {}", key, value);
+    }
+
+    let mut scores2 = HashMap::new();
+    scores2.insert(String::from("Blue"), 10);
+
+    // The value will be replaced
+    scores2.insert(String::from("Blue"), 25);
+    println!("{:?}", scores2);
+
+    scores2.entry(String::from("Yeallow")).or_insert(50);
+    scores2.entry(String::from("Blue")).or_insert(50);
+
+    println!("{:?}", scores2);
+
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{:?}", map);
 }
