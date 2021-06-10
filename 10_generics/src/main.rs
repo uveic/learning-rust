@@ -1,3 +1,6 @@
+// The semicolon tells Rust to load the module from a file with the same name
+mod aggregator;
+
 fn largest(list: &[i32]) -> i32 {
     let mut largest = list[0];
 
@@ -10,17 +13,17 @@ fn largest(list: &[i32]) -> i32 {
     largest
 }
 
-// fn largest_generic<T>(list: &[T]) -> T {
-//     let mut largest = list[0];
-//
-//     for &item in list {
-//         if item > largest {
-//             largest = item;
-//         }
-//     }
-//
-//     largest
-// }
+fn largest_generic<T: PartialOrd + Copy>(list: &[T]) -> T {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
 
 struct Point<T> {
     x: T,
@@ -63,12 +66,12 @@ fn main() {
     let result = largest(&number_list);
     println!("The largest number is {}", result);
 
-    // let result = largest_generic(&number_list);
-    // println!("The largest number is {}", result);
-    //
-    // let char_list = vec!['a', 'y', 'm', 'q'];
-    // let result = largest_generic(&char_list);
-    // println!("The largest char is {}", result);
+    let result = largest_generic(&number_list);
+    println!("The largest number is {}", result);
+
+    let char_list = vec!['a', 'y', 'm', 'q'];
+    let result = largest_generic(&char_list);
+    println!("The largest char is {}", result);
 
     let _integer = Point { x: 5, y: 10};
     let _float = Point { x: 1.0, y: 4.0};
@@ -83,4 +86,37 @@ fn main() {
     let p2 = AnotherPoint { x: "Hello", y: 'c' };
     let p3 = p1.mix_up(p2);
     println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+
+    // use aggregator::Tweet;
+    //
+    // let tweet = Tweet {
+    //     username: String::from("horse_ebooks"),
+    //     content: String::from("of course, as you probably already know, people"),
+    //     reply: false,
+    //     retweet: false,
+    // };
+    //
+    // println!("1 new tweet: {}", tweet.summarize());
+    //
+    // use aggregator::NewsArticle;
+    //
+    // let article = NewsArticle {
+    //     headline: String::from("Penguins win the Stanly Cup Championship!"),
+    //     location: String::from("Pittsburgh, PA, USA"),
+    //     author: String::from("Iceburgh"),
+    //     content: String::from("The Pittsburgh Penguins once again are the best \
+    //          hockey team in the NHL.",
+    //     ),
+    // };
+    //
+    // println!("New article available! {}", article.summarize());
+    //
+    // use aggregator::Test;
+    //
+    // let test = Test {
+    //     value: String::from("hello"),
+    //     key: 3,
+    // };
+    //
+    // println!("Test: {}", test.summarize());
 }
