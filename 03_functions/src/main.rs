@@ -19,6 +19,8 @@ fn main() {
 
     // This is a line comment
     // Multiple line comments can be done like this
+
+    print_label_measurement(5, 'h');
 }
 
 fn plus_one(x: i32) -> i32 {
@@ -32,4 +34,8 @@ fn five() -> i32 {
 fn another_function(x: i32, y: i32) {
     println!("The value of x is: {}", x);
     println!("The value of y is: {}", y);
+}
+
+fn print_label_measurement(value: i32, unit_label: char) {
+    println!("The measurement is: {}{}", value, unit_label);
 }
