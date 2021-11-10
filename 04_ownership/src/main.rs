@@ -64,7 +64,12 @@ fn main() {
 
     let string_literal = "a string literal";
     println!("The first word in '{}' is '{}'", string_literal, fist_word(&string_literal[..]));
+    println!("The first word in '{}' is '{}'", &string_literal[0..3], fist_word(&string_literal[0..3]));
+    println!("The first word in '{}' is '{}'", &string_literal[2..], fist_word(&string_literal[2..]));
     println!("The first word in '{}' is '{}'", string_literal, fist_word(string_literal));
+
+    let str = String::from("this is a string");
+    println!("The first word in '{}' is '{}'", str, fist_word(&str));
 
     // But mutable references have one big restriction: you can have only one mutable reference
     // to a particular piece of data at a time.
@@ -78,6 +83,7 @@ fn main() {
     let r1 = &s61; // no problem
     let r2 = &s61; // no problem
     println!("{} and {}", r1, r2);
+    s61.push_str(", world!");
     // let r3 = &mut s61; // BIG PROBLEM
     // println!("{}, {}, and {}", r1, r2, r3);
 
@@ -144,7 +150,7 @@ fn fist_word(s: &str) -> &str {
 
     for (i , &item) in bytes.iter().enumerate() {
         if item == b' ' {
-            return &s[0..i];
+            return &s[0..i]; // This is a string slice: a reference to part of a String.
         }
     }
 
