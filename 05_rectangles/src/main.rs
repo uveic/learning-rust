@@ -9,6 +9,10 @@ impl Rectangle {
         self.width * self.height
     }
 
+    fn width(&self) -> bool {
+        self.width > 0
+    }
+
     fn can_hold(&self, other: &Rectangle) -> bool {
         self.width > other.width && self.height > other.height
     }
@@ -45,6 +49,8 @@ fn main() {
         &rect1,
         area_struct(&rect1)
     );
+
+    println!("The rectangle has a non zero width, it is {}", rect1.width());
 
     let rect2 = Rectangle {
         width: 20,

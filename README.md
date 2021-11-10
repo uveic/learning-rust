@@ -47,6 +47,12 @@ let slice = &s[3..len];
 let slice = &s[3..];
 ```
 
+`println!("{:?}", some_struct);`: the specifier `:?` inside the curly brackets tells `println!` we want to use an output format called `Debug`.
+
+`println!("{:#?}", some_struct);`: we get a fancier output using `:#?`.
+
+`dbg!(some_expresion);`: prints the file and line number of where that `dbg!` macro call occurs in your code along with the resulting value of that expression.
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
