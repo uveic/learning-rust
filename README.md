@@ -24,17 +24,17 @@ I am going to leave here code, notes, commands and other stuff I find useful or 
 
 `cargo doc --open`: build documentation provided by all of your dependencies locally and open it in your browser.
 
-### Code snippets
+### Code Snippets
 `.iter()`: returns each element in a collection. Example below.
 
 `.enumerate()`: wraps the result of `.iter()` and returns each element as part of a tuple instead: the first element is the index, and the second element is a reference to the element. Example:
 ```rust
-    let bytes = String::from("hello").as_bytes();
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return i;
-        }
+let bytes = String::from("hello").as_bytes();
+for (i, &item) in bytes.iter().enumerate() {
+    if item == b' ' {
+        return i;
     }
+}
 ```
 
 String slice:

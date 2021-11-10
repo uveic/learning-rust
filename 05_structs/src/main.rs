@@ -2,21 +2,21 @@ fn main() {
     struct User {
         username: String,
         email: String,
-        sing_in_count: u64,
+        sign_in_count: u64,
         active: bool,
     }
 
     let user1 = User {
         email: String::from("someone@example.com"),
         username: String::from("Some Name"),
-        sing_in_count: 1,
+        sign_in_count: 1,
         active: true,
     };
 
     let mut user2 = User {
         email: String::from("email@example.com"),
         username: String::from("Pepe"),
-        sing_in_count: 1,
+        sign_in_count: 1,
         active: true,
     };
     user2.email = String::from("new_email@example.com");
@@ -26,7 +26,7 @@ fn main() {
         User {
             email: email,
             username: username,
-            sing_in_count: 1,
+            sign_in_count: 1,
             active: true,
         }
     }
@@ -36,7 +36,7 @@ fn main() {
             email,
             username,
             active: true,
-            sing_in_count: 1,
+            sign_in_count: 1,
         }
     }
 
@@ -47,7 +47,7 @@ fn main() {
         email: String::from("hello@example.com"),
         username: String::from("Xoan"),
         active: user1.active,
-        sing_in_count: user1.sing_in_count,
+        sign_in_count: user1.sign_in_count,
     };
 
     let _user7 = User {
