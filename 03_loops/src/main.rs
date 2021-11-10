@@ -11,6 +11,27 @@ fn main() {
 
     println!("The result is: {}", result);
 
+    counter = 0;
+    'counting_up: loop {
+        println!("counter: {}", counter);
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining: {}", remaining);
+            if remaining == 9 {
+                break;
+            }
+            if counter == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        counter += 1;
+    }
+
+    println!("End count: {}", counter);
+
     let mut number = 3;
 
     while number != 0 {
@@ -28,7 +49,7 @@ fn main() {
         index += 1;
     }
 
-    for element in a.iter() {
+    for element in a {
         println!("the value is {}", element);
     }
 

@@ -21,9 +21,10 @@ fn main() {
     let mut current_fibonacci: u64 = 1;
     let mut temp: u64;
 
-    if total > 2 {
-        print!("Fibonacci series: {} {} ", previous_fibonacci, current_fibonacci);
-    }
+    match total {
+        1 => print!("Fibonacci series: 1"),
+        _ => print!("Fibonacci series: 1 1 "),
+    };
 
     while counter < total {
         temp = previous_fibonacci;
