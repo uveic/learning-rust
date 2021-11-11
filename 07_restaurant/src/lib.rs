@@ -8,33 +8,10 @@ mod tests {
 
 // The semicolon tells Rust to load the module from a file with the same name
 mod front_of_house;
+mod back_of_house;
 
-mod back_of_house {
-    pub enum Appetizer {
-        Soup,
-        Salad,
-    }
-
-    pub struct Breakfast {
-        pub toast: String,
-        seasonal_fruit: String,
-    }
-
-    impl Breakfast {
-        pub fn summer(toast: &str) -> Breakfast {
-            Breakfast {
-                toast: String::from(toast),
-                seasonal_fruit: String::from("peaches"),
-            }
-        }
-    }
-
-    fn fix_incorrect_order() {
-        cook_order();
-        super::serve_order();
-    }
-
-    fn cook_order() {}
+mod warehouse {
+    pub fn get_ingredients() {}
 }
 
 fn serve_order() {}
@@ -64,5 +41,8 @@ pub fn eat_at_restaurant() {
     // meal.seasonal_fruit = String::from("blueberries");
 
     let order1 = back_of_house::Appetizer::Soup;
-    let order1 = back_of_house::Appetizer::Salad;
+    let order2 = back_of_house::Appetizer::Salad;
+
+    println!("Order 1: {:?}", order1);
+    println!("Order 2: {:?}", order2);
 }
