@@ -43,7 +43,7 @@ fn main() {
         Text(String),
     }
 
-    let row = vec![
+    let _row = vec![
         SpreadsheetCell::Int(3),
         SpreadsheetCell::Text(String::from("blue")),
         SpreadsheetCell::Float(10.12),
@@ -56,29 +56,29 @@ fn main() {
     let mut s = String::new();
 
     let data = "initial contents";
-    let st = data.to_string();
-    let str = "initial contents".to_string();
-    let stri = String::from("initial contents");
+    let _st = data.to_string();
+    let _str = "initial contents".to_string();
+    let _stri = String::from("initial contents");
 
     // UTF-8 encoded
-    let hello = String::from("السلام عليكم");
-    let hello = String::from("Dobrý den");
-    let hello = String::from("Hello");
-    let hello = String::from("שָׁלוֹם");
-    let hello = String::from("नमस्ते");
-    let hello = String::from("こんにちは");
-    let hello = String::from("안녕하세요");
-    let hello = String::from("你好");
-    let hello = String::from("Olá");
-    let hello = String::from("Здравствуйте");
-    let hello = String::from("Hola");
+    let _hello = String::from("السلام عليكم");
+    let _hello = String::from("Dobrý den");
+    let _hello = String::from("Hello");
+    let _hello = String::from("שָׁלוֹם");
+    let _hello = String::from("नमस्ते");
+    let _hello = String::from("こんにちは");
+    let _hello = String::from("안녕하세요");
+    let _hello = String::from("你好");
+    let _hello = String::from("Olá");
+    let _hello = String::from("Здравствуйте");
+    let _hello = String::from("Hola");
 
     s.push_str("bar");
 
     let mut s1 = String::from("foo");
     let s2 = "bar";
     s1.push_str(s2);
-    println!("s2 is {}", s2);
+    println!("s2 is {}, s1 is {}", s2, s1);
 
     let mut s3 = String::from("lo");
     s3.push('l');
@@ -110,6 +110,10 @@ fn main() {
         println!("{}", c);
     }
 
+    for b in "नमस्ते".bytes() {
+        println!("{}", b);
+    }
+
     ////////////////////////////////
     ////////////////////////////////
     // HashMap
@@ -130,7 +134,8 @@ fn main() {
 
     let mut map = HashMap::new();
     map.insert(field_value, field_name);
-    // field_nane and field_value are invalid at this point
+    // field_name and field_value are invalid at this point,
+    // they were moved and the hash map is the owner
 
     let team_name = String::from("Blue");
     println!("Score for Blue team: {:?}", scores.get(&team_name));
@@ -146,13 +151,13 @@ fn main() {
     scores2.insert(String::from("Blue"), 25);
     println!("{:?}", scores2);
 
-    scores2.entry(String::from("Yeallow")).or_insert(50);
+    // Only insert a new value if the key doesn't exist yet
+    scores2.entry(String::from("Yellow")).or_insert(50);
     scores2.entry(String::from("Blue")).or_insert(50);
 
     println!("{:?}", scores2);
 
     let text = "hello world wonderful world";
-
     let mut map = HashMap::new();
 
     for word in text.split_whitespace() {

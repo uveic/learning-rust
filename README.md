@@ -1,6 +1,6 @@
 # My journey learning Rust
 
-I am going to leave here code, notes, commands and other stuff I find useful or interesting while learning Rust.  
+Code, notes, commands and other stuff I find useful or interesting while learning Rust. Mainly stuff I find I might want to come back to it in the future. In no specific order. It might change over time.
 
 ### Useful commands:
 
@@ -82,3 +82,8 @@ let slice = &s[3..];
     }                              // this scope is now over, and s is no
                                    // longer valid
 ```
+
+### [Collections](https://doc.rust-lang.org/stable/book/ch08-00-common-collections.html)
+* Vectors (`Vec<T>`) allow you to store more than one value in a single data structure that puts all the values next to each other in memory. Vectors can only store values of the same type. They are useful when you have a list of items, such as the lines of text in a file or the prices of items in a shopping cart. [Standard Library Documentation](https://doc.rust-lang.org/stable/std/vec/struct.Vec.html).
+* A string is a collection of characters. Strings are complicated. Rust has only one string type in the core language, which is the string slice `str` that is usually seen in its borrowed form `&str`. The `String` type, which is provided by Rust’s standard library rather than coded into the core language, is a growable, mutable, owned, UTF-8 encoded string type.
+* Hash Maps (`HashMap<K, V>`): The type `HashMap<K, V>` stores a mapping of keys of type `K` to values of type `V`. It does this via a hashing function, which determines how it places these keys and values into memory. [Standard Library Documentation](https://doc.rust-lang.org/std/collections/struct.HashMap.html).
