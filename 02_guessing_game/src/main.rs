@@ -32,25 +32,28 @@ fn main() {
         println!("Please, input your guess: ");
         count += 1;
 
-        let mut guess = String::new();
+        let mut guess_str = String::new();
 
         io::stdin()
-            .read_line(&mut guess)
+            .read_line(&mut guess_str)
             .expect("Failed to read line");
 
-        let guess : i32 = match guess.trim().parse() {
-            Ok(num) => num,
+        let guess: Guess = match guess_str.trim().parse() {
+            Ok(num) => Guess::new(num),
             Err(_) => continue,
         };
 
-        if guess < 1 || guess > 100 {
-            println!("The secret number will be between 1 and 100");
-            continue;
-        }
+        // Not needed anymore because this check is make in Guess::new()
+        // It panics instead of giving the user a new chance though
+        //
+        // if guess.value() < 1 || guess.value() > 100 {
+        //     println!("The secret number will be between 1 and 100");
+        //     continue;
+        // }
 
-        println!("You guessed: {}", guess);
+        println!("You guessed: {}", guess.value());
 
-        match guess.cmp(&secret_number) {
+        match guess.value().cmp(&secret_number) {
             Ordering::Less => println!("Too Small!"),
             Ordering::Greater => println!("Too Big!"),
             Ordering::Equal => {
