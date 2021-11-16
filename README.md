@@ -10,41 +10,50 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 
 `rustup doc`: open the local documentation in your browser.
 
-`rustfmt`: If you want to stick to a standard style across Rust projects, you can use an automatic formatter tool called rustfmt to format your code in a particular style.
+`rustfmt`: format your code in a particular style.
 
-`cargo build`: creates an executable file in `target/debug/hello_cargo`.
+`cargo build`: create an executable file in `target/debug/hello_cargo`.
 
 `cargo run`: compile the code and then run the resulting executable all-in-one command.
 
-`cargo check`: quickly checks your code to make sure it compiles but doesn’t produce an executable.
+`cargo check`: quickly check your code to make sure it compiles. It doesn't produce an executable.
 
-`cargo build --release`: When your project is finally ready for release, you can use `cargo build --release` to compile it with optimizations. This command will create an executable in `target/release` instead of `target/debug`.
+`cargo build --release`: compile your project with optimizations when it is finally ready for release. An executable will be created in `target/release` instead of `target/debug`.
 
-`cargo update`: Ignore the Cargo.lock file and figures out all the dependencies from Cargo.toml.
+`cargo update`: ignore the `Cargo.lock` file and figure out all the dependencies from `Cargo.toml`.
 
 `cargo doc --open`: build documentation provided by all of your dependencies locally and open it in your browser.
+
+`cargo test`: run tests.
+* `cargo test -- --help`: show help.
+* `cargo test -- --test-threads=1`: control over the number of threads used.
+* `cargo test -- --show-output`: show the output (of `println!()`) of successful tests.
+* `cargo test name_of_test_you_want_to_run`: run a specific test.
+* `cargo test part_of_a_test_name`: run any test whose name matches this value.
+* `cargo test -- --ignore`: run only ignored tests. All ignore tests include the line `#[ignore]` before the test.
+* `cargo test --test integration_test`: run a particular integration test function.
 
 ### Code Snippets
 `.iter()`: returns each element in a collection. Example below.
 
 `.enumerate()`: wraps the result of `.iter()` and returns each element as part of a tuple instead: the first element is the index, and the second element is a reference to the element. Example:
 ```rust
-let bytes = String::from("hello").as_bytes();
-for (i, &item) in bytes.iter().enumerate() {
-    if item == b' ' {
-        return i;
+    let bytes = String::from("hello").as_bytes();
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
     }
-}
 ```
 
 String slice:
 ```rust
-let s = String::from("hello");
+    let s = String::from("hello");
 
-let len = s.len();
+    let len = s.len();
 
-let slice = &s[3..len];
-let slice = &s[3..];
+    let slice = &s[3..len];
+    let slice = &s[3..];
 ```
 
 `println!("{:?}", some_struct);`: the specifier `:?` inside the curly brackets tells `println!` we want to use an output format called `Debug`.
