@@ -53,6 +53,25 @@ let slice = &s[3..];
 
 `dbg!(some_expresion);`: prints the file and line number of where that `dbg!` macro call occurs in your code along with the resulting value of that expression.
 
+### Terminology (for Rust or programming in general)
+`Monomorphization`: the process of turning generic code into specific code by filling in the concrete types that are used when compiled. Rust implements generics in such a way that your code doesn’t run any slower using generic types than it would with concrete types.
+
+`Polymorphism`: the provision of a single interface to entities of different types or the use of a single symbol to represent multiple different types.The concept is borrowed from a principle in biology where an organism or species can have many different forms or stages.
+
+`Parametric polymorphism`: Using parametric polymorphism, a function or a data type can be written generically so that it can handle values identically without depending on their type. Such functions and data types are called generic functions and generic datatypes respectively and form the basis of generic programming.
+
+`Trait`: Trait definitions are a way to group method signatures together to define a set of behaviors necessary to accomplish some purpose. A type’s behavior consists of the methods we can call on that type. Different types share the same behavior if we can call the same methods on all of those types. Traits are similar to a feature often called interfaces in other languages, although with some differences. [↗️](https://doc.rust-lang.org/stable/book/ch10-02-traits.html)
+
+`coherence` and the `orphan rule`: One restriction to note with trait implementations is that we can implement a trait on a type only if either the trait or the type is local to our crate. But we can’t implement external traits on external types. For example, we can’t implement the `Display` trait on `Vec<T>` within our crate, because `Display` and `Vec<T>` are defined in the standard library and aren’t local to our crate. This restriction is part of a property of programs called `coherence`, and more specifically the `orphan rule`, so named because the parent type is not present. This rule ensures that other people’s code can’t break your code and vice versa. Without the rule, two crates could implement the same trait for the same type, and Rust wouldn’t know which implementation to use.
+
+`Syntactic sugar`: syntax within a programming language that is designed to make things easier to read or to express. It makes the language "sweeter" for human use: things can be expressed more clearly, more concisely, or in an alternative style that some may prefer.  [↗️](https://en.wikipedia.org/wiki/Syntactic_sugar)
+
+`Statically typed language`: A language is statically typed if the type of a variable is known at compile time. For some languages this means that you as the programmer must specify what type each variable is; other languages offer some form of type inference, the capability of the type system to deduce the type of a variable. The main advantage here is that all kinds of checking can be done by the compiler, and therefore a lot of trivial bugs are caught at a very early stage.
+
+`Dynamically typed language`: A language is dynamically typed if the type is associated with run-time values, and not named variables/fields/etc. This means that you as a programmer can write a little quicker because you do not have to specify types every time (unless using a statically-typed language with type inference).
+
+`Strongly typed language`: Strongly typed is a concept used to refer to a programming language that enforces strict restrictions on intermixing of values with differing data types. Generally, a strongly typed language has stricter typing rules at compile time, which implies that errors and exceptions are more likely to happen during compilation. Most of these rules affect variable assignment, function return values, procedure arguments and function calling. Dynamically typed languages (where type checking happens at run time) can also be strongly typed. Note that in dynamically typed languages, values have types, not variables. The opposite of a strongly typed language is a "weakly (or loosely) typed language". [↗️](https://en.wikipedia.org/wiki/Strong_and_weak_typing)
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
