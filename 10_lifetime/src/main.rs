@@ -10,6 +10,8 @@
 //     }
 // }
 
+use std::fmt::Display;
+
 // The function signature now tells Rust that for some lifetime 'a, the function takes two
 // parameters, both of which are string slices that live at least as long as lifetime 'a.
 // The function signature also tells Rust that the string slice returned from the function
@@ -28,6 +30,33 @@ fn longest_with_lifetime_annotation<'a>(x: &'a str, y: &'a str) -> &'a str {
 // in its part field.
 struct ImportantExcerpt<'a> {
     part: &'a str,
+}
+
+impl<'a> ImportantExcerpt<'a> {
+    fn level(&self) -> i32 {
+        3
+    }
+
+    fn announce_and_return_part(&self, announcement: &str) -> &str {
+        println!("Attention please: {}", announcement);
+        self.part
+    }
+}
+
+fn longest_with_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+where
+    T: Display
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
 }
 
 fn main() {
@@ -66,4 +95,18 @@ fn main() {
         part: first_sentence,
     };
     println!("Important sentence: {}", i.part);
+    let part = i.announce_and_return_part(String::from("this is an announcement").as_str());
+    println!("The announcement was done. Level: {}. Part: {}", i.level(), part);
+
+    // 'static is a special lifetime, which means that this reference can live for the
+    // entire duration of the program
+    let s: &'static str = "I have a static lifetime";
+    println!("{}", s);
+
+    let longest = longest_with_announcement(
+        string3.as_str(),
+        string1.as_str(),
+        String::from("ARE YOU THERE?")
+    );
+    println!("The longest string is {}", longest);
 }

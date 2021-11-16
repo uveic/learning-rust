@@ -1,8 +1,8 @@
 # My journey learning Rust
 
-Code, notes, commands and other stuff I find useful or interesting while learning Rust. Mainly stuff I find I might want to come back to it in the future. In no specific order. It might change over time.
+Code, notes, commands and other stuff I find useful or interesting while learning Rust. Mainly stuff I might want to come back to it in the future. In no specific order. It might change over time.
 
-### Useful commands:
+### Commands:
 
 `rustup update`: update Rust to the latest version.
 
