@@ -1,5 +1,7 @@
 use functional;
 
+mod iterator;
+
 fn main() {
     functional::generate_workout(33, 4);
 
@@ -21,4 +23,8 @@ fn main() {
     let a = vec![1, 2, 3];
 
     assert!(equal_to_y(a));
+
+    let counter = iterator::Counter::new();
+    let res: Vec<u32> = counter.map(|x| x + 1).collect();
+    println!("Counter: {:?}", res);
 }
