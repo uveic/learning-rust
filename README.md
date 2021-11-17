@@ -64,11 +64,13 @@ String slice:
 
 ### Rust Terminology
 
-`Monomorphization`: the process of turning generic code into specific code by filling in the concrete types that are used when compiled. Rust implements generics in such a way that your code doesn’t run any slower using generic types than it would with concrete types.
+`Monomorphization`: the process of turning generic code into specific code by filling in the concrete types that are used when compiled. Rust implements generics in such a way that your code doesn't run any slower using generic types than it would with concrete types.
 
 `Trait`: Trait definitions are a way to group method signatures together to define a set of behaviors necessary to accomplish some purpose. A type’s behavior consists of the methods we can call on that type. Different types share the same behavior if we can call the same methods on all of those types. Traits are similar to a feature often called interfaces in other languages, although with some differences. [↗️](https://doc.rust-lang.org/stable/book/ch10-02-traits.html)
 
-`coherence` and the `orphan rule`: One restriction to note with trait implementations is that we can implement a trait on a type only if either the trait or the type is local to our crate. But we can’t implement external traits on external types. For example, we can’t implement the `Display` trait on `Vec<T>` within our crate, because `Display` and `Vec<T>` are defined in the standard library and aren’t local to our crate. This restriction is part of a property of programs called `coherence`, and more specifically the `orphan rule`, so named because the parent type is not present. This rule ensures that other people’s code can’t break your code and vice versa. Without the rule, two crates could implement the same trait for the same type, and Rust wouldn’t know which implementation to use.
+`coherence` and the `orphan rule`: One restriction to note with trait implementations is that we can implement a trait on a type only if either the trait or the type is local to our crate. But we can’t implement external traits on external types. For example, we can’t implement the `Display` trait on `Vec<T>` within our crate, because `Display` and `Vec<T>` are defined in the standard library and aren't local to our crate. This restriction is part of a property of programs called `coherence`, and more specifically the `orphan rule`, so named because the parent type is not present. This rule ensures that other people’s code can’t break your code and vice versa. Without the rule, two crates could implement the same trait for the same type, and Rust wouldn't know which implementation to use.
+
+`Closure`: anonymous functions you can save in a variable or pass as arguments to other functions. You can create the closure in one place and then call the closure to evaluate it in a different context.
 
 ### Programming Terminology
 
@@ -88,6 +90,8 @@ String slice:
 
 `Idiomatic Code`: following the conventions of the language. You want to find the easiest and most common ways of accomplishing a task rather than porting your knowledge from a different language. Pertaining or conforming to the natural mode of expression of a language.
 
+`memoization or lazy evaluation pattern`: We can create a struct that will hold the closure and the resulting value of calling the closure. The struct will execute the closure only if we need the resulting value, and it will cache the resulting value so the rest of our code doesn't have to be responsible for saving and reusing the result.
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
@@ -104,7 +108,7 @@ String slice:
 * Rust takes a different path: the memory is automatically returned once the variable that owns it goes out of scope.
 * When a variable goes out of scope, Rust calls a special function for us: `drop`.
 * Just as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.
-* But mutable references have one big restriction: you can have only one mutable reference to a particular piece of data at a time.
+* Mutable references have one big restriction: you can have only one mutable reference to a particular piece of data at a time.
 * At any given time, you can have either one mutable reference or any number of immutable references.
 * References must always be valid.
 
