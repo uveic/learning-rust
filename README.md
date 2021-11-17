@@ -86,6 +86,8 @@ String slice:
 
 `Parametric polymorphism`: Using parametric polymorphism, a function or a data type can be written generically so that it can handle values identically without depending on their type. Such functions and data types are called generic functions and generic datatypes respectively and form the basis of generic programming.
 
+`Idiomatic Code`: following the conventions of the language. You want to find the easiest and most common ways of accomplishing a task rather than porting your knowledge from a different language. Pertaining or conforming to the natural mode of expression of a language.
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
