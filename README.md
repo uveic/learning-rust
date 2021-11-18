@@ -44,22 +44,22 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 
 `.enumerate()`: wraps the result of `.iter()` and returns each element as part of a tuple instead: the first element is the index, and the second element is a reference to the element. Example:
 ```rust
-    let bytes = String::from("hello").as_bytes();
-    for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' {
-            return i;
-        }
+let bytes = String::from("hello").as_bytes();
+for (i, &item) in bytes.iter().enumerate() {
+    if item == b' ' {
+        return i;
     }
+}
 ```
 
 String slice:
 ```rust
-    let s = String::from("hello");
+let s = String::from("hello");
 
-    let len = s.len();
+let len = s.len();
 
-    let slice = &s[3..len];
-    let slice = &s[3..];
+let slice = &s[3..len];
+let slice = &s[3..];
 ```
 
 `println!("{:?}", some_struct);`: the specifier `:?` inside the curly brackets tells `println!` we want to use an output format called `Debug`.
@@ -120,12 +120,12 @@ String slice:
 
 ### [Variable Scope](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#variable-scope)
 ```rust
-    {                      // s is not valid here, it’s not yet declared
-        let s = "hello";   // s is valid from this point forward
+{                      // s is not valid here, it’s not yet declared
+    let s = "hello";   // s is valid from this point forward
 
-        // do stuff with s
-    }                              // this scope is now over, and s is no
-                                   // longer valid
+    // do stuff with s
+}                              // this scope is now over, and s is no
+                               // longer valid
 ```
 
 ### [Collections](https://doc.rust-lang.org/stable/book/ch08-00-common-collections.html)
