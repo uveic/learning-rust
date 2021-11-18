@@ -14,11 +14,11 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 
 `cargo build`: create an executable file in `target/debug/hello_cargo`.
 
+`cargo build --release`: compile your project with optimizations when it is finally ready for release. An executable will be created in `target/release` instead of `target/debug`.
+
 `cargo run`: compile the code and then run the resulting executable all-in-one command.
 
 `cargo check`: quickly check your code to make sure it compiles. It doesn't produce an executable.
-
-`cargo build --release`: compile your project with optimizations when it is finally ready for release. An executable will be created in `target/release` instead of `target/debug`.
 
 `cargo update`: ignore the `Cargo.lock` file and figure out all the dependencies from `Cargo.toml`.
 
@@ -32,6 +32,12 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 * `cargo test part_of_a_test_name`: run any test whose name matches this value.
 * `cargo test -- --ignore`: run only ignored tests. All ignore tests include the line `#[ignore]` before the test.
 * `cargo test --test integration_test`: run a particular integration test function.
+  
+`cargo login your-api-token`: you need an account on crates.io in order to publish any crates. This command will inform Cargo of your API token and store it locally in ~/.cargo/credentials.
+
+`cargo publish`: publish your crate to crates.io.
+
+`cargo install`: install and use binary crates locally. It is a convenient way for Rust developers to install tools that others have shared on crates.io.
 
 ### Code Snippets
 `.iter()`: returns each element in a collection. Example below.
