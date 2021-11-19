@@ -98,6 +98,10 @@ let slice = &s[3..];
 
 `memoization or lazy evaluation pattern`: We can create a struct that will hold the closure and the resulting value of calling the closure. The struct will execute the closure only if we need the resulting value, and it will cache the resulting value so the rest of our code doesn't have to be responsible for saving and reusing the result.
 
+`Concurrent programming`: different parts of a program execute independently.
+
+`Parallel programming`: different parts of a program execute at the same time.
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
