@@ -102,6 +102,34 @@ let slice = &s[3..];
 
 `Parallel programming`: different parts of a program execute at the same time.
 
+`Inheritance`: a mechanism whereby an object can inherit from another object’s definition, thus gaining the parent object’s data and behavior without you having to define them again.
+
+`Encapsulation`: (commonly associated with OOP) the implementation details of an object aren't accessible to code using that object. Therefore, the only way to interact with an object is through its public API; code using the object shouldn’t be able to reach into the object's internals and change data or behavior directly.
+
+### Data Structures
+A good guide to learn data structures and algorithms is this [GitHub repo](https://github.com/jwasham/coding-interview-university).
+
+`Array`: fixed-size array.
+
+`Vector`: a growable array.
+
+`Set`: a collection of unique values.
+
+`HashMap` or `Hash table`: a collection of key-value pairs.
+
+`HashSet`: a collection of unique values.
+
+`Linked List`: a collection of values, where each value is connected to the next value.
+
+`Stack`: a collection of values, where the most recently added value is the first to be removed.
+
+`Queue`: a collection of values, where the first value to be added is the first to be removed.
+
+### Algorithms
+`Bubble Sort`: a sorting algorithm that compares each pair of adjacent elements and swaps them if they are in the wrong order.
+
+`Quick Sort`: a sorting algorithm that divides the array into two parts, and then recursively sorts each part.
+
 ### [The Stack and the Heap](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html#the-stack-and-the-heap)
 
 * **The stack** stores values in the order it gets them and removes the values in the opposite order. This is referred to as last in, first out.
