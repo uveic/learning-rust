@@ -1,4 +1,4 @@
-use std::sync::mpsc;
+use std::sync::{Arc, mpsc, Mutex};
 use std::thread;
 
 fn main() {
@@ -133,4 +133,61 @@ fn main() {
     for received in rx3 {
         println!("Got: {}", received);
     }
+
+    // Using Mutexes to Allow Access to Data from One Thread at a Time
+
+    // Mutex is an abbreviation for mutual exclusion, as in, a mutex allows only one thread
+    // to access some data at any given time.
+    // The Mutex type is a synchronization primitive that can be used to protect shared data
+    // from being simultaneously accessed by multiple threads. Mutexes can be used to
+    // synchronize access to shared data that is used across multiple threads.
+    let m = Mutex::new(5);
+
+    {
+        let mut num = m.lock().unwrap();
+        *num = 6;
+    }
+
+    println!("m = {:?}", m);
+
+    // Sharing a Mutex<T> Between Multiple Threads
+    //
+    // This fails:
+    // Rust is telling us that we can’t move the ownership of lock counter into multiple threads.
+
+    // let counter = Mutex::new(0);
+    // let  mut handles = vec![];
+    //
+    // for _ in 0..10 {
+    //     let handle = thread::spawn(move || {
+    //         let mut num = counter.lock().unwrap();
+    //         *num += 1;
+    //     });
+    //     handles.push(handle);
+    // }
+    //
+    // for handle in handles {
+    //     handle.join().unwrap();
+    // }
+    //
+    // println!("Result: {}", *counter.lock().unwrap());
+
+    // Multiple Ownership with Multiple Threads
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
 }
