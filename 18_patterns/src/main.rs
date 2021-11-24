@@ -114,12 +114,144 @@ fn main() {
     }
 
     // Destructuring Enums
-    // ToDo
+    let msg = Message::ChangeColour(0, 160, 255);
+
+    match msg {
+        Message::Quit => {
+            println!("The Quit variant has no data to destructure.")
+        },
+        Message::Move { x, y } => {
+            println!("Move in the x direction {} and in the y direction {}", x, y)
+        },
+        Message::Write(text) => println!("Text message: {}", text),
+        Message::ChangeColour(r, g, b) => {
+            println!("Change the colour to red {}, green {}, and blue {}", r, g, b)
+        },
+    }
+
+    // Destructuring Nested Structs and Enums
+    let msg = AnotherMessage::ChangeColour(Colour::Hsv(0, 160, 255));
+
+    match msg {
+        AnotherMessage::ChangeColour(Colour::Rgb(r, g, b)) => {
+            println!("Change the colour to red {}, green {}, and blue {}", r, g, b)
+        },
+        AnotherMessage::ChangeColour(Colour::Hsv(h, s, v)) => {
+            println!("Change the colour to hue {}, saturation {}, and value {}", h, s, v)
+        },
+        _ => (),
+    }
+
+    // Destructuring Structs and Tuples
+    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+    println!("{} feet, {} inches, x: {}, y: {}", feet, inches, x, y);
+
+    // Ignoring Parts of a Value with a Nested _
+    let mut setting_value = Some(5);
+    let new_setting_value = Some(10);
+
+    match (setting_value, new_setting_value) {
+        (Some(_), Some(_)) => {
+            println!("Can't overwrite an existing customized value");
+        },
+        _ => { setting_value = new_setting_value; },
+    }
+
+    println!("setting is {:?}", setting_value);
+
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, _, third, _, fifth) => {
+            println!("Some numbers: {}, {}, {}", first, third, fifth);
+        },
+    }
+
+    let s = Some(String::from("Hello"));
+    if let Some(_) = s {
+        println!("Found a string");
+    }
+    println!("{:?}", s);
+
+    // Ignoring Remaining Parts of a Value with ..
+    let origin = Point3D { x: 0, y: 0, z: 0 };
+
+    match origin {
+        Point3D { x, .. } => println!("x is {}", x),
+    }
+
+    // Extra Conditionals with Match Guards
+    // A match guard is an additional if condition specified after the pattern in a match
+    // arm that must also match, along with the pattern matching, for that arm to be chosen.
+
+    let num = Some(4);
+    match num {
+        Some(x) if x < 5 => println!("less than five: {}", x),
+        Some(x) => println!("{}", x),
+        None => (),
+    }
+
+    let x = Some(5);
+    let y = 10;
+    match x {
+        Some(50) => println!("Got 50"),
+        Some(n) if n == y => println!("Matched, n = {:?}", n),
+        _ => println!("Default case, x = {:?}", x),
+    }
+
+    // the preference in a matching guard behaves like this:
+    // (4 | 5 | 6) if y => ...
+    let bool = true;
+    match y {
+        4 | 5 | 6 if bool => println!("yes"),
+        _ => println!("no"),
+    }
+
+    // @ Bindings
+    // The at operator (@) lets us create a variable that holds a value at the same
+    // time we’re testing that value to see whether it matches a pattern.
+    let msg = OneMoreMessage::Hello { id: 5 };
+    match msg {
+        OneMoreMessage::Hello {
+            id: id_variable @ 3..=7,
+        } => println!("id is {}", id_variable),
+        OneMoreMessage::Hello { id: 10..=12 } => println!("id is 10..=12"),
+        OneMoreMessage::Hello { id } => println!("id is {}", id),
+    }
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColour(i32, i32, i32),
+}
+
+enum Colour {
+    Rgb(i32, i32, i32),
+    Hsv(i32, i32, i32),
+}
+
+enum AnotherMessage {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColour(Colour),
+}
+
+enum OneMoreMessage {
+    Hello { id: i32 },
 }
 
 struct Point {
     x: i32,
     y: i32,
+}
+
+struct Point3D {
+    x: i32,
+    y: i32,
+    z: i32,
 }
 
 fn print_coordinates(&(x, y): &(i32, i32)) {
