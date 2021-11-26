@@ -1,4 +1,4 @@
-use std::sync::{Arc, mpsc, Mutex};
+use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
@@ -17,7 +17,7 @@ impl Worker {
                 Message::NewJob(job) => {
                     println!("Worker {} got a job; executing...", id);
                     job();
-                },
+                }
                 Message::Terminate => {
                     println!("Worker {} was told to terminate.", id);
                     break;
@@ -27,7 +27,7 @@ impl Worker {
 
         Worker {
             id,
-            thread: Some(thread)
+            thread: Some(thread),
         }
     }
 }

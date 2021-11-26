@@ -10,7 +10,7 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 
 `rustup doc`: open the local documentation in your browser.
 
-`rustfmt`: format your code in a particular style.
+`cargo fmt`: format your code in a particular style.
 
 `cargo build`: create an executable file in `target/debug/hello_cargo`.
 
