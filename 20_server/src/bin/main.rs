@@ -6,15 +6,17 @@ use server::ThreadPool;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let pool = ThreadPool::new(4);
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        let pool = ThreadPool::new(4);
 
         pool.execute(|| {
             handle_connection(stream)
         });
     }
+
+    println!("Shutting down...");
 }
 
 fn handle_connection(mut stream: TcpStream) {
@@ -22,7 +24,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.read(&mut buffer).unwrap();
 
-    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
+    // println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 
     let get = b"GET / HTTP/1.1\r\n";
     let sleep = b"GET /sleep HTTP/1.1\r\n";
