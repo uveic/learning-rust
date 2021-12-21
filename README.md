@@ -24,6 +24,8 @@ Code, notes, commands and other stuff I find useful or interesting while learnin
 
 `cargo doc --open`: build documentation provided by all of your dependencies locally and open it in your browser.
 
+`cargo clippy`: collection of lints to analyze your code so you can catch common mistakes and improve your Rust code.
+
 `cargo test`: run tests.
 * `cargo test -- --help`: show help.
 * `cargo test -- --test-threads=1`: control over the number of threads used.
