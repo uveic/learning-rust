@@ -83,23 +83,29 @@ pub mod day02 {
 pub mod day03 {
     use std::collections::HashMap;
 
-    pub fn calculate_power_consumption(content: &Vec<&str>) -> () {
-        let mut bits: HashMap<(i32, char), i32> = HashMap::new();
+    fn get_bit_count_per_position(content: &Vec<&str>) -> HashMap<(i32, char), i32> {
+        let mut bits_count: HashMap<(i32, char), i32> = HashMap::new();
 
         for item in content {
             for (i, c) in item.chars().enumerate() {
                 let entry: (i32, char) = (i as i32, c);
-                let count = bits.entry(entry).or_insert(0);
+                let count = bits_count.entry(entry).or_insert(0);
                 *count += 1;
             }
         }
+
+        bits_count
+    }
+
+    pub fn calculate_power_consumption(content: &Vec<&str>) -> () {
+        let bits_count = get_bit_count_per_position(content);
 
         let mut max: HashMap<i32, char> = HashMap::new();
         let mut min: HashMap<i32, char> = HashMap::new();
         let end: i32 = content[0].len() as i32;
         for i in 0..end {
-            let zero = bits.get(&(i, '0')).unwrap();
-            let one = bits.get(&(i, '1')).unwrap();
+            let zero = bits_count.get(&(i, '0')).unwrap();
+            let one = bits_count.get(&(i, '1')).unwrap();
 
             max.insert(i, if zero > one { '0' } else { '1' });
             min.insert(i, if zero < one { '0' } else { '1' });
@@ -121,5 +127,56 @@ pub mod day03 {
 
         println!("Epsilon rate: {}, {}", epsilon_rate, epsilon_rate_decimal);
         println!("Power consumption: {}", gamma_rate_decimal * epsilon_rate_decimal);
+    }
+
+    pub fn calculate_support_rating(content: &Vec<&str>) -> () {
+        let bits_count = get_bit_count_per_position(content);
+
+        let end: i32 = content[0].len() as i32;
+        let mut oxygen_content = content.clone();
+        let mut scrubber_content = content.clone();
+
+        for i in 0..end {
+            let index: usize = i as usize;
+            let zero_count = bits_count.get(&(i, '0')).unwrap();
+            let one_count = bits_count.get(&(i, '1')).unwrap();
+
+            let oxygen_bit: char = if zero_count > one_count { '0' } else { '1' };
+            let scrubber_bit: char = if zero_count < one_count { '0' } else { '1' };
+
+            println!("Oxygen len: {}", oxygen_content.len());
+
+            for j in 0..oxygen_content.len() {
+                if oxygen_content.len() == 1 { continue; }
+
+                let current_char = oxygen_content[j].chars().nth(index).unwrap();
+                if current_char != oxygen_bit { oxygen_content.remove(j); }
+            }
+
+            for k in 0..scrubber_content.len() {
+                if scrubber_content.len() == 1 { continue; }
+
+                let current_char = scrubber_content[k].chars().nth(index).unwrap();
+                if current_char != scrubber_bit { scrubber_content.remove(k); }
+            }
+        }
+
+        println!("Oxygen content: {:?}", oxygen_content);
+        println!("Scrubber content: {:?}", scrubber_content);
+    }
+
+    fn content_filer(
+        content: &mut Vec<&str>,
+        filter_bit: char,
+        index: usize,
+    ) -> &mut Vec<&str> {
+        content.retain(|x| {
+            let current_char = x.chars().nth(index).unwrap();
+            current_char != filter_bit
+        });
+
+
+
+        content
     }
 }
