@@ -149,53 +149,67 @@ pub mod day03 {
     pub fn calculate_support_rating(content: &Vec<&str>) -> () {
         let bits_count = get_bit_count_per_position(content);
 
-        let end: i32 = content[0].len() as i32;
         let mut oxygen_content = content.clone();
         let mut scrubber_content = content.clone();
 
-        for i in 0..end {
-            let index: usize = i as usize;
-            let zero_count = bits_count.get(&(i, '0')).unwrap();
-            let one_count = bits_count.get(&(i, '1')).unwrap();
+        let oxygen_content_res = content_filter(&mut oxygen_content, true, None, &bits_count);
+        println!("\n\n");
+        let scrubber_content_res = content_filter(&mut scrubber_content, false, None, &bits_count);
 
-            let oxygen_bit: char = if zero_count > one_count { '0' } else { '1' };
-            let scrubber_bit: char = if zero_count < one_count { '0' } else { '1' };
+        println!("Oxygen content: {:?}", oxygen_content_res);
+        println!("Scrubber content: {:?}", scrubber_content_res);
 
-            println!("Oxygen len: {}", oxygen_content.len());
+        let oxygen_rate = isize::from_str_radix(&oxygen_content_res[0], 2).unwrap();
+        let scrubber_rate = isize::from_str_radix(&scrubber_content_res[0], 2).unwrap();
 
-            for j in 0..oxygen_content.len() {
-                if oxygen_content.len() == 1 {
-                    continue;
-                }
-
-                let current_char = oxygen_content[j].chars().nth(index).unwrap();
-                if current_char != oxygen_bit {
-                    oxygen_content.remove(j);
-                }
-            }
-
-            for k in 0..scrubber_content.len() {
-                if scrubber_content.len() == 1 {
-                    continue;
-                }
-
-                let current_char = scrubber_content[k].chars().nth(index).unwrap();
-                if current_char != scrubber_bit {
-                    scrubber_content.remove(k);
-                }
-            }
-        }
-
-        println!("Oxygen content: {:?}", oxygen_content);
-        println!("Scrubber content: {:?}", scrubber_content);
+        println!("Oxygen rate: {}", oxygen_rate);
+        println!("Scrubber rate: {}", scrubber_rate);
+        println!("Support rating: {}", oxygen_rate * scrubber_rate);
     }
 
-    fn content_filer(content: &mut Vec<&str>, filter_bit: char, index: usize) -> &mut Vec<&str> {
+    fn content_filter<'a>(
+        content: &'a mut Vec<&'a str>,
+        min: bool,
+        index: Option<usize>,
+        bits_count: &HashMap<(i32, char), i32>,
+    ) -> &'a mut Vec<&'a str> {
+        let len = content[0].len();
+        let i: usize = index.unwrap_or(0);
+
+        println!(
+            "Index: {}, len: {}, content length: {}",
+            i,
+            len,
+            content.len()
+        );
+
+        if i >= len {
+            return content;
+        }
+
+        let zero_count = bits_count.get(&(i as i32, '0')).unwrap();
+        let one_count = bits_count.get(&(i as i32, '1')).unwrap();
+
+        let filter_bit: char = if zero_count > one_count { '0' } else { '1' };
+
+        println!(
+            "'0' count: {}, '1' count: {}, filter_bit: {}",
+            zero_count, one_count, filter_bit
+        );
+
         content.retain(|x| {
-            let current_char = x.chars().nth(index).unwrap();
-            current_char != filter_bit
+            let current_char: char = x.chars().nth(i).unwrap();
+            if min {
+                current_char == filter_bit
+            } else {
+                current_char != filter_bit
+            }
         });
 
-        content
+        if content.len() == 1 {
+            return content;
+        }
+
+        content_filter(content, min, Some(i + 1), bits_count)
     }
 }
