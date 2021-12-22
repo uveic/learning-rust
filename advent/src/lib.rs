@@ -5,7 +5,11 @@ pub mod day01 {
 
         for n in content {
             match prev {
-                Some(p) => if n > &p { count += 1 },
+                Some(p) => {
+                    if n > &p {
+                        count += 1
+                    }
+                }
                 None => (),
             }
             prev = Some(*n);
@@ -27,7 +31,11 @@ pub mod day01 {
 
             let sum: i32 = content[index] + content[index + 1] + content[index + 2];
             match prev {
-                Some(p) => if sum > p { count += 1 },
+                Some(p) => {
+                    if sum > p {
+                        count += 1
+                    }
+                }
                 None => (),
             }
 
@@ -54,7 +62,10 @@ pub mod day02 {
             }
         }
 
-        println!("Final position, horizontal: {}, depth: {}", horizontal, depth);
+        println!(
+            "Final position, horizontal: {}, depth: {}",
+            horizontal, depth
+        );
         println!("Result moving submarine: {}", horizontal * depth);
     }
 
@@ -75,7 +86,10 @@ pub mod day02 {
             }
         }
 
-        println!("Final position, horizontal: {}, depth: {}, aim: {}", horizontal, depth, aim);
+        println!(
+            "Final position, horizontal: {}, depth: {}, aim: {}",
+            horizontal, depth, aim
+        );
         println!("Result moving submarine: {}", horizontal * depth);
     }
 }
@@ -126,7 +140,10 @@ pub mod day03 {
         let epsilon_rate_decimal = isize::from_str_radix(&epsilon_rate.to_string(), 2).unwrap();
 
         println!("Epsilon rate: {}, {}", epsilon_rate, epsilon_rate_decimal);
-        println!("Power consumption: {}", gamma_rate_decimal * epsilon_rate_decimal);
+        println!(
+            "Power consumption: {}",
+            gamma_rate_decimal * epsilon_rate_decimal
+        );
     }
 
     pub fn calculate_support_rating(content: &Vec<&str>) -> () {
@@ -147,17 +164,25 @@ pub mod day03 {
             println!("Oxygen len: {}", oxygen_content.len());
 
             for j in 0..oxygen_content.len() {
-                if oxygen_content.len() == 1 { continue; }
+                if oxygen_content.len() == 1 {
+                    continue;
+                }
 
                 let current_char = oxygen_content[j].chars().nth(index).unwrap();
-                if current_char != oxygen_bit { oxygen_content.remove(j); }
+                if current_char != oxygen_bit {
+                    oxygen_content.remove(j);
+                }
             }
 
             for k in 0..scrubber_content.len() {
-                if scrubber_content.len() == 1 { continue; }
+                if scrubber_content.len() == 1 {
+                    continue;
+                }
 
                 let current_char = scrubber_content[k].chars().nth(index).unwrap();
-                if current_char != scrubber_bit { scrubber_content.remove(k); }
+                if current_char != scrubber_bit {
+                    scrubber_content.remove(k);
+                }
             }
         }
 
@@ -165,17 +190,11 @@ pub mod day03 {
         println!("Scrubber content: {:?}", scrubber_content);
     }
 
-    fn content_filer(
-        content: &mut Vec<&str>,
-        filter_bit: char,
-        index: usize,
-    ) -> &mut Vec<&str> {
+    fn content_filer(content: &mut Vec<&str>, filter_bit: char, index: usize) -> &mut Vec<&str> {
         content.retain(|x| {
             let current_char = x.chars().nth(index).unwrap();
             current_char != filter_bit
         });
-
-
 
         content
     }
