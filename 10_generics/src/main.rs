@@ -28,7 +28,7 @@ fn largest(list: &[i32]) -> i32 {
 // i32 or char. Types like i32 and char that have a known size can be stored on the stack, so they
 // implement the Copy trait. But when we made the largest function generic, it became possible
 // for the list parameter to have types in it that don’t implement the Copy trait. Consequently,
-// we wouldn’t be able to move the value out of list[0] and into the largest variable.
+// we wouldn't be able to move the value out of list[0] and into the largest variable.
 // To call this code with only those types that implement the Copy trait,
 // we can add Copy to the trait bounds of T!
 fn largest_generic<T: PartialOrd + Copy>(list: &[T]) -> T {
