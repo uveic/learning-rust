@@ -209,3 +209,131 @@ pub mod day03 {
         content_filter(content, min, Some(i + 1))
     }
 }
+
+pub mod day04 {
+    use std::fs;
+
+    #[derive(Debug, Clone)]
+    pub struct Line{
+        numbers: Vec<i32>
+    }
+
+    impl Line {
+        fn new(line: &str) -> Line {
+
+            println!("{}", line);
+
+            let numbers: Vec<i32> = line.split_whitespace()
+                .map(|l| l.trim().parse::<i32>().unwrap())
+                .collect();
+
+            if numbers.len() != 5 {
+                panic!("Invalid line: {}", line);
+            }
+
+            Line { numbers }
+        }
+
+        fn new_empty() -> Line {
+            Line { numbers: vec![0; 5] }
+        }
+    }
+
+    #[derive(Debug)]
+    pub struct Card {
+        lines: Vec<Line>
+    }
+
+    impl Card {
+        fn new(lines: Vec<Line>) -> Card {
+            if lines.len() != 5 {
+                panic!("Invalid card: {:?}", lines);
+            }
+
+            Card { lines }
+        }
+
+        fn new_empty() -> Card {
+            Card { lines: vec![Line::new_empty(); 5] }
+        }
+
+        fn check_number(&self, number: i32, cards_check: &mut Vec<Card>) -> () {
+            for (i, card) in cards_check.iter().enumerate() {
+                for (j, line) in card.lines.iter().enumerate() {
+                    for (k, number_line) in line.numbers.iter().enumerate() {
+                        if number_line == &number {
+                            cards_check[i].lines[j].numbers[k] = 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        fn check_winner(&self, cards_check: &Vec<Card>) -> Option<Line> {
+            for card in cards_check {
+                for line in &card.lines {
+                    if line.numbers.iter().sum::<i32>() == 5 {
+                        return Some(line.clone());
+                    }
+                }
+            }
+
+            None
+        }
+    }
+
+    pub fn read_numbers() -> Vec<i32> {
+        let numbers_content: String =
+            fs::read_to_string(String::from("data/day04_bingo_numbers.txt")).unwrap();
+        let numbers_vec: Vec<&str> = numbers_content
+            .split("\n")
+            .filter(|l| l.len() > 0)
+            .collect();
+        let numbers: Vec<i32> = numbers_vec[0]
+            .split(",")
+            .filter(|l| l.parse::<i32>().is_ok())
+            .map(|l| l.parse::<i32>().unwrap())
+            .collect();
+
+        numbers
+    }
+
+    pub fn read_bingo_cards() -> Vec<Card> {
+        let bingo_content: String =
+            fs::read_to_string(String::from("data/day04_bingo_cards.txt")).unwrap();
+        let mut bingo_cards: Vec<Card> = Vec::new();
+        let mut lines: Vec<Line> = Vec::new();
+        for line in bingo_content.split("\n") {
+            if line.len() <= 0 {
+                continue;
+            }
+
+            lines.push(Line::new(line));
+
+            if lines.len() == 5 {
+                bingo_cards.push(Card::new(lines));
+                lines = Vec::new();
+            }
+        }
+
+        bingo_cards
+    }
+
+    pub fn get_winner(cards: Vec<Card>, numbers: Vec<i32>) -> () {
+        let mut cards_check: Vec<Card> = cards.iter().map(|_| Card::new_empty()).collect();
+
+        for number in numbers {
+            for card in &cards {
+                card.check_number(number, &mut cards_check);
+                match card.check_winner(&cards_check) {
+                    Some(line) => {
+                        println!("Winner line: {:?}", line);
+                        println!("Result: {}", line.numbers.iter().product::<i32>() * number);
+                        return;
+                    },
+                    _ => ()
+                }
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@ use advent::day01::{count_individual_measurements, count_three_window};
 use advent::day02::{move_submarine, move_submarine_aim};
 use advent::day03::{calculate_power_consumption, calculate_support_rating};
 use std::fs;
+use advent::day04::{read_bingo_cards, read_numbers};
 
 fn main() {
     println!("############ DAY 1 ############");
@@ -25,4 +26,11 @@ fn main() {
     let input: Vec<&str> = content.split("\n").filter(|l| l.len() > 0).collect();
     calculate_power_consumption(&input);
     calculate_support_rating(&input);
+
+    println!("\n############ DAY 4 ############");
+    let numbers = read_numbers();
+    let bingo_cards = read_bingo_cards();
+
+    println!("{:?}", numbers);
+    println!("{:?}", bingo_cards);
 }
