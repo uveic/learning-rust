@@ -214,16 +214,16 @@ pub mod day04 {
     use std::fs;
 
     #[derive(Debug, Clone)]
-    pub struct Line{
-        numbers: Vec<i32>
+    pub struct Line {
+        numbers: Vec<i32>,
     }
 
     impl Line {
         fn new(line: &str) -> Line {
-
             println!("{}", line);
 
-            let numbers: Vec<i32> = line.split_whitespace()
+            let numbers: Vec<i32> = line
+                .split_whitespace()
                 .map(|l| l.trim().parse::<i32>().unwrap())
                 .collect();
 
@@ -235,13 +235,15 @@ pub mod day04 {
         }
 
         fn new_empty() -> Line {
-            Line { numbers: vec![0; 5] }
+            Line {
+                numbers: vec![0; 5],
+            }
         }
     }
 
     #[derive(Debug)]
     pub struct Card {
-        lines: Vec<Line>
+        lines: Vec<Line>,
     }
 
     impl Card {
@@ -254,7 +256,9 @@ pub mod day04 {
         }
 
         fn new_empty() -> Card {
-            Card { lines: vec![Line::new_empty(); 5] }
+            Card {
+                lines: vec![Line::new_empty(); 5],
+            }
         }
 
         fn check_number(&self, number: i32, cards_check: &mut Vec<Card>) -> () {
@@ -330,8 +334,8 @@ pub mod day04 {
                         println!("Winner line: {:?}", line);
                         println!("Result: {}", line.numbers.iter().product::<i32>() * number);
                         return;
-                    },
-                    _ => ()
+                    }
+                    _ => (),
                 }
             }
         }

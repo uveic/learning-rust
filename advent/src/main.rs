@@ -1,8 +1,8 @@
 use advent::day01::{count_individual_measurements, count_three_window};
 use advent::day02::{move_submarine, move_submarine_aim};
 use advent::day03::{calculate_power_consumption, calculate_support_rating};
-use std::fs;
 use advent::day04::{read_bingo_cards, read_numbers};
+use std::fs;
 
 fn main() {
     println!("############ DAY 1 ############");
