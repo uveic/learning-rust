@@ -147,14 +147,12 @@ pub mod day03 {
     }
 
     pub fn calculate_support_rating(content: &Vec<&str>) -> () {
-        let bits_count = get_bit_count_per_position(content);
-
         let mut oxygen_content = content.clone();
         let mut scrubber_content = content.clone();
 
-        let oxygen_content_res = content_filter(&mut oxygen_content, true, None, &bits_count);
+        let oxygen_content_res = content_filter(&mut oxygen_content, true, None);
         println!("\n\n");
-        let scrubber_content_res = content_filter(&mut scrubber_content, false, None, &bits_count);
+        let scrubber_content_res = content_filter(&mut scrubber_content, false, None);
 
         println!("Oxygen content: {:?}", oxygen_content_res);
         println!("Scrubber content: {:?}", scrubber_content_res);
@@ -171,17 +169,10 @@ pub mod day03 {
         content: &'a mut Vec<&'a str>,
         min: bool,
         index: Option<usize>,
-        bits_count: &HashMap<(i32, char), i32>,
     ) -> &'a mut Vec<&'a str> {
         let len = content[0].len();
         let i: usize = index.unwrap_or(0);
-
-        println!(
-            "Index: {}, len: {}, content length: {}",
-            i,
-            len,
-            content.len()
-        );
+        let bits_count: HashMap<(i32, char), i32> = get_bit_count_per_position(content);
 
         if i >= len {
             return content;
@@ -193,8 +184,13 @@ pub mod day03 {
         let filter_bit: char = if zero_count > one_count { '0' } else { '1' };
 
         println!(
-            "'0' count: {}, '1' count: {}, filter_bit: {}",
-            zero_count, one_count, filter_bit
+            "Index: {:2}, len: {}, content length: {:4}, '0' count: {:4}, '1' count: {:4}, filter_bit: {}",
+            i,
+            len,
+            content.len(),
+            zero_count,
+            one_count,
+            filter_bit,
         );
 
         content.retain(|x| {
@@ -210,6 +206,6 @@ pub mod day03 {
             return content;
         }
 
-        content_filter(content, min, Some(i + 1), bits_count)
+        content_filter(content, min, Some(i + 1))
     }
 }
