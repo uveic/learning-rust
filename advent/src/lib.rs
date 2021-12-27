@@ -211,7 +211,6 @@ pub mod day03 {
 }
 
 pub mod day04 {
-    use std::collections::HashMap;
     use std::fs;
 
     #[derive(Debug, Clone)]
@@ -241,28 +240,55 @@ pub mod day04 {
             }
         }
 
-        fn check_number(&self, number: &usize, matches: &mut HashMap<usize, Vec<usize>>) -> () {
-            let found: Option<&usize> = self.numbers.iter().find(|n| *n == number);
+        fn check_number(
+            &self,
+            bingo_number: &usize,
+            matches: &mut Vec<(usize, &Vec<usize>)>,
+        ) -> Option<&Vec<usize>> {
+            let found: Option<&usize> = self.numbers.iter().find(|n| *n == bingo_number);
 
             if found.is_some() {
-                match matches.get(&self.card) {
-                    Some(numbers) => {
-                        numbers.push(*number);
+                println!(
+                    "Found: {}, line: {:?}, matches: {:?}",
+                    bingo_number,
+                    self,
+                    matches.get(self.card)
+                );
+
+                return match matches.iter().find(|c| c.0 == self.card) {
+                    Some(&c) => {
+                        matches.remove(c);
+                        c.1.push(*bingo_number);
+
+                        Some(c.1)
                     }
                     None => {
                         let mut numbers = Vec::new();
-                        numbers.push(*number);
-                        matches.insert(self.card, numbers);
+                        numbers.push(*bingo_number);
+                        matches.push((self.card, &mut numbers));
+
+                        Some(&numbers)
                     }
+                };
+            }
+
+            None
+        }
+
+        fn check_winner(&self, line: &Vec<usize>, number: &usize) -> bool {
+            if line.len() == 5 {
+                println!("Winner: {:?}", line);
+
+                let mut result: usize = 1;
+                for n in line {
+                    result *= n;
                 }
 
-                println!(
-                    "Found: {}, line: {:?}, matches: {:?}",
-                    number,
-                    self,
-                    matches.get(&self.card)
-                );
+                println!("Result: {}", result * number);
+                return true;
             }
+
+            false
         }
     }
 
@@ -303,34 +329,19 @@ pub mod day04 {
     }
 
     pub fn get_winner(lines: Vec<Line>, numbers: Vec<usize>) -> () {
-        let mut matches: HashMap<usize, Vec<usize>> = HashMap::new();
+        let mut matches: Vec<(usize, &mut Vec<usize>)> = Vec::new();
 
         for number in numbers {
             for line in &lines {
-                line.check_number(&number, &mut matches);
-                match check_winner(&matches, &number) {
-                    true => return,
-                    _ => (),
+                match line.check_number(&number, &mut matches) {
+                    Some(numbers) => {
+                        if line.check_winner(&numbers, &number) {
+                            return;
+                        }
+                    }
+                    None => {}
                 }
             }
         }
-    }
-
-    fn check_winner(matches: &HashMap<usize, Vec<usize>>, number: &usize) -> bool {
-        let mut found_key: Option<usize> = None;
-        for (k, v) in matches.iter().enumerate() {
-            if matches.get(k).unwrap().iter().len() == 5 {
-                found_key = Some(k);
-            }
-        }
-
-        if let Some(k) = found_key {
-            let found: &Vec<usize> = matches.get(&k).unwrap();
-            println!("Winner: {:?}", found);
-            println!("Result: {}", found.product::<usize>() * number);
-            return true;
-        }
-
-        false
     }
 }
